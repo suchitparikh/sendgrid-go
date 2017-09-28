@@ -16,17 +16,16 @@ import (
 )
 
 func main() {
-	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
-
-	message := &mail.SGMessage{
-		To:          []mail.Email{"Example Recipient", "test@example.com"},
-        From:        mail.Email{"Example Sender", "from@example.com"},
-        Subject:     "Test Email Subject",
+	message := &mail.Message{
+		To:          []mail.Email{"test@example.com", "Example Recipient"},
+        	From:        mail.Email{"from@example.com", "Example Sender"},
+        	Subject:     "Test Email Subject",
 		TextContent: "Text Email Content",
 		HTMLContent: "<strong>HTML Email Content<strong>",
 	}
 
-	response, err := client.SendMail(message)
+	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
+	response, err := client.Send(message)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -53,24 +52,20 @@ import (
 )
 
 func main() {
-	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
-
-	message := &mail.SGMessage{
-		To:          []mail.Email{"Example Recipient", "test@example.com"},
-		From:        mail.Email{"Example Sender", "from@example.com"},
+	message := &mail.Message{
+		To:          []mail.Email{
+			         mail.Email{"test1@example.com", "Example Recipient1"},
+				 mail.Email{"test2@example.com", "Example Recipient3"},
+				 mail.Email{"test3@example.com", "Example Recipient3"},
+			     },
+		From:        mail.Email{"from@example.com", "Example Sender"},
 		Subject:     "Test Email Subject",
 		TextContent: "Text Email Content",
 		HTMLContent: "<strong>HTML Email Content<strong>",
 	}
 
-	// Add additional To addresses
-	message.AddTos([]mail.Email{
-		mail.Email{"Example Recipient2", "test@example.com"},
-		mail.Email{"Example Recipient3", "test@example.com"},
-		mail.Email{"Example Recipient4", "test@example.com"},
-	})
-
-	response, err := client.SendMail(message)
+	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
+	response, err := client.Send(message)
 	if err != nil {
 		fmt.Println(err)
 	} else {
