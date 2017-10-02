@@ -78,6 +78,8 @@ func main() {
 
 # Send Multiple Emails to Multiple Recipients
 
+## TODO: https://github.com/sendgrid/sendgrid-python/blob/master/proposals/mail-helper-refactor.md#send-multiple-emails-to-multiple-recipients
+
 The following code assumes you are storing the API key in an environment variable (recommended). 
 ```go
 package main
@@ -95,20 +97,20 @@ func main() {
                 From: mail.Email{"from@example.com", "Example Sender"},
         }
         
-        numRecipients := 3
+	numRecipients := 3
         
         tos := [numRecipients]mail.Email{
                 mail.Email{"test1@example.com", "Test Recipient"},
-                mail.Email{"test2@example.com", "Test Recipient"}.
+                mail.Email{"test2@example.com", "Test Recipient"},
                 mail.Email{"test3@example.com", "Test Recipient"},
         }
         message.AddTos(tos)
         
         substitutions := []map[string]string
         sub1 := [numRecipients]map[string]string{
-                "-name", "Alain",
-                "-name", "Elmer",
-                "-name", "Matt",
+                "-name-", "Alain",
+                "-name-", "Elmer",
+                "-name-", "Matt",
         }
         substitutions := append(substitutions, sub1)
         
